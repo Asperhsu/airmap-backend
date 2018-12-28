@@ -9,6 +9,9 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="https://v5.airmap.g0v.tw"><i class="fas fa-map"></i> 地圖</a>
+            </li>
             <li class="nav-item {{ active('list') }}">
                 <a class="nav-link" href="{{ route('list') }}"><i class="fas fa-list-ul"></i> 站點列表</a>
             </li>

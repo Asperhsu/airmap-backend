@@ -28,7 +28,7 @@
 
         @yield('content')
 
-        <footer class="mt-3">
+        <footer class="mt-3 bg-light">
             @yield('footer')
 
             <div>Asper &copy; 2019  <a href="https://www.facebook.com/g0vairmap/"><i class="fab fa-facebook-square"></i></a></div>
