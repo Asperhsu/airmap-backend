@@ -17,16 +17,18 @@
     <link rel='shortcut icon' type='image/x-icon' href='https://i.imgur.com/Gro4juQ.png' />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @yield('style')
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="d-flex flex-column" style="min-height: 100vh;">
         @yield('navbar')
 
+        <div class="flex-grow-1">
         @yield('content')
+        </div>
 
         <footer class="mt-3 bg-light">
             @yield('footer')
