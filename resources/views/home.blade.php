@@ -16,9 +16,9 @@
                 <i class="fas fa-tachometer-alt fa-5x"></i>
                 <h1>找工具</h1>
             </a>
-            <a href="{{ route('screenshot.index') }}" class="btn btn-warning m-1" style="border-radius: 15%;">
-                <i class="fas fa-camera fa-5x"></i>
-                <h1>看截圖</h1>
+            <a href="{{ route('recruit') }}" class="btn btn-warning m-1" style="border-radius: 15%;">
+                <i class="fas fa-sign-in-alt fa-5x"></i>
+                <h1>加入吧</h1>
             </a>
         </div>
 
