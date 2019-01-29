@@ -38,7 +38,7 @@ class EpaFeedsFetcher extends FeedsFetcher
             return $item['County'] == $country && $item['SiteName'] == $siteName;
         });
 
-        return $this->siteInfo->get($index);
+        return $index ? $this->siteInfo->get($index) : null;
     }
 
     public function feedResource()
