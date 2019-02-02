@@ -60,63 +60,74 @@
     </div>
 </form>
 
-@if (count($sites))
-<div class="container">
+@if (!$sites)
+<div class="text-center text-muted">
+    請使用關鍵字或地區搜尋
+</div>
+@else
+    @if(count($sites))
+    <div class="container">
 
-    <div class="card-columns">
-        @foreach ($sites as $site)
-        <div class="card site-card mb-4">
-            <div class="card-header bg-dark text-white">{{ $site->get('SiteName') }}</div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
+        <div class="card-columns">
+            @foreach ($sites as $site)
+            <div class="card site-card mb-4">
+                <div class="card-header bg-dark text-white">{{ $site->get('SiteName') }}</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-sm-6"><strong>Group</strong></div>
+                            <div class="col-sm-6">{{ $site->get('SiteGroup') }}</div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-sm-6"><strong>Maker</strong></div>
+                            <div class="col-sm-6">{{ $site->get('Maker') }}</div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-sm-6"><strong>ID</strong></div>
+                            <div class="col-sm-6">{{ $site->get('uniqueKey') }}</div>
+                        </div>
+                    </li>
+                    @foreach ($site->get('Data') as $name => $value)
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-sm-6"><strong>{{ $name }}</strong></div>
+                            <div class="col-sm-6">{{ $value }}</div>
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+                <div class="card-footer">
                     <div class="row">
-                        <div class="col-sm-6"><strong>Group</strong></div>
-                        <div class="col-sm-6">{{ $site->get('SiteGroup') }}</div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-sm-6"><strong>Maker</strong></div>
-                        <div class="col-sm-6">{{ $site->get('Maker') }}</div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-sm-6"><strong>ID</strong></div>
-                        <div class="col-sm-6">{{ $site->get('uniqueKey') }}</div>
-                    </div>
-                </li>
-                @foreach ($site->get('Data') as $name => $value)
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-sm-6"><strong>{{ $name }}</strong></div>
-                        <div class="col-sm-6">{{ $value }}</div>
-                    </div>
-                </li>
-                @endforeach
-            </ul>
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col">
-                        @if ($site->get('Geometry'))
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span class="geometry">{{ $site->get('Geometry')->get('COUNTYNAME') }} {{ $site->get('Geometry')->get('TOWNNAME') }}</span>
-                        @endif
-                    </div>
+                        <div class="col">
+                            @if ($site->get('Geometry'))
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="geometry">{{ $site->get('Geometry')->get('COUNTYNAME') }} {{ $site->get('Geometry')->get('TOWNNAME') }}</span>
+                            @endif
+                        </div>
 
-                    <div class="col-sm-auto mr-0">
-                        <a href="{{ route('widget.create', [$site->get('SiteGroup'), $site->get('uniqueKey')]) }}" class="btn btn-sm btn-outline-primary">
-                            <i class="fas fa-tachometer-alt"></i> Widget
-                        </a>
+                        <div class="col-sm-auto mr-0">
+                            <a href="{{ route('widget.create', [$site->get('SiteGroup'), $site->get('uniqueKey')]) }}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-tachometer-alt"></i> Widget
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
-        @endforeach
-    </div>
 
-</div>
+    </div>
+    @else
+    <div class="text-center text-muted">
+        無符合搜尋條件的結果
+    </div>
+    @endif
 @endif
+
 @endsection
 
 

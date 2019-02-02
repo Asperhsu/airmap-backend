@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 use App\Repository\JSONRepository;
 
 class ListController extends Controller
 {
     public function index(Request $request)
     {
-        $countries = $towns = $sites = [];
+        $sites = null;
+        $countries = $towns = [];
         $country = $request->get('country');
         $town = $request->get('town');
         $keyword = $request->get('keyword');

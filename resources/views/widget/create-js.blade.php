@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col">
             <div class="header-title">
-                <h2>Widget 小工具 (JS 版本)</h2>
+                <h2>Widget 小工具</h2>
                 <h5>如果想把特定測站嵌入網頁，您可以從下方預覽小工具與取得HTML碼</h5>
             </div>
         </div>
@@ -23,11 +23,11 @@
     <div class="row widget">
         <div class="col-4">
             <div class="preview">
-                {!! $vues->get('text') !!}
+                {!! data_get($vues, 'text.normal') !!}
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-8">
             <div class="card">
                 <div class="card-header">
                     <h3>簡約列表</h3>
@@ -41,7 +41,15 @@
                 <div class="card-body">
                     <h5 class="card-title">Code</h5>
                     <p class="card-text">
-                        <pre><code>{{ $vues->get('text') }}<br/>{{ $vueScript }}</code></pre>
+                        <pre><code>{{ data_get($vues, 'text.normal') }}<br/>{{ $vueScript }}</code></pre>
+                    </p>
+
+                    <h5 class="card-title">相容版本</h5>
+                    <p class="text-muted">
+                        <small>如上方的版本未出現，可測試使用相容版本</small>
+                    </p>
+                    <p class="card-text">
+                        <pre><code>{{ data_get($vues, 'text.compatible') }}<br/>{{ $vueScript }}</code></pre>
                     </p>
                 </div>
             </div>
@@ -52,11 +60,11 @@
     <div class="row widget">
         <div class="col-4">
             <div class="preview">
-                {!! $vues->get('marker') !!}
+                {!! data_get($vues, 'marker.normal') !!}
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-8">
             <div class="card">
                 <div class="card-header">
                     <h3>醒目圖示</h3>
@@ -70,7 +78,15 @@
                 <div class="card-body">
                     <h5 class="card-title">Code</h5>
                     <p class="card-text">
-                        <pre><code>{{ $vues->get('marker') }}<br/>{{ $vueScript }}</code></pre>
+                        <pre><code>{{ data_get($vues, 'marker.normal') }}<br/>{{ $vueScript }}</code></pre>
+                    </p>
+
+                    <h5 class="card-title">相容版本</h5>
+                    <p class="text-muted">
+                        <small>如上方的版本未出現，可測試使用相容版本</small>
+                    </p>
+                    <p class="card-text">
+                        <pre><code>{{ data_get($vues, 'marker.compatible') }}<br/>{{ $vueScript }}</code></pre>
                     </p>
                 </div>
             </div>
@@ -80,11 +96,11 @@
     <div class="row widget">
         <div class="col-4">
             <div class="preview">
-                {!! $vues->get('thin') !!}
+                {!! data_get($vues, 'thin.normal') !!}
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-8">
             <div class="card">
                 <div class="card-header">
                     <h3>狹窄</h3>
@@ -98,7 +114,15 @@
                 <div class="card-body">
                     <h5 class="card-title">Code</h5>
                     <p class="card-text">
-                        <pre><code>{{ $vues->get('thin') }}<br/>{{ $vueScript }}</code></pre>
+                        <pre><code>{{ data_get($vues, 'thin.normal') }}<br/>{{ $vueScript }}</code></pre>
+                    </p>
+
+                    <h5 class="card-title">相容版本</h5>
+                    <p class="text-muted">
+                        <small>如上方的版本未出現，可測試使用相容版本</small>
+                    </p>
+                    <p class="card-text">
+                        <pre><code>{{ data_get($vues, 'thin.compatible') }}<br/>{{ $vueScript }}</code></pre>
                     </p>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <?php
+
 namespace App\Repository;
 
-use DB;
 use Carbon\Carbon;
 use App\Models\Group;
 use App\Models\Record;
@@ -57,7 +57,7 @@ class JSONRepository
      */
     public static function group($group)
     {
-        if (!is_a($group, Group::class) && ! ($group = static::findGroup($group))) {
+        if (!is_a($group, Group::class) && !($group = static::findGroup($group))) {
             return false;
         }
 
@@ -87,15 +87,16 @@ class JSONRepository
      */
     public static function groups()
     {
-        $records = collect();
+        $groupIds = Group::where('enable', true)->pluck('id');
 
-        Group::where('enable', true)->each(function ($group) use (&$records) {
-            if ($groupRecords = static::group($group)) {
-                $records = $records->merge($groupRecords);
-            }
-        });
-
-        return $records;
+        return LatestRecord::whereIn('group_id', $groupIds)
+            ->leftJoin('lass_analyses', 'latest_records.uuid', 'lass_analyses.uuid')
+            ->where('published_at', '>=', static::validTime())
+            ->select(['latest_records.*', 'lass_analyses.*', 'latest_records.uuid as uuid'])
+            ->get()
+            ->map(function ($record) {
+                return GroupJSONFormatter::format($record);
+            });
     }
 
     /**
@@ -186,30 +187,30 @@ class JSONRepository
         $grouped = static::groups()->groupBy(function ($item, $key) {
             $geometry = $item->get('Geometry');
 
-            return $geometry ? $geometry->get('COUNTYNAME').'-'.$geometry->get('TOWNNAME') : 'noneGeometry';
+            return $geometry ? $geometry->get('COUNTYNAME') . '-' . $geometry->get('TOWNNAME') : 'noneGeometry';
         })->filter(function ($items, $regionName) {
             return $regionName !== 'noneGeometry';
         })->map(function ($items, $regionName) {
             [$country, $town] = explode('-', $regionName);
 
             $sitesPm25 = $items->mapWithKeys(function ($item) {
-                $key = $item->get('SiteGroup').'$'.$item->get('uniqueKey');
+                $key = $item->get('SiteGroup') . '$' . $item->get('uniqueKey');
                 return [$key => $item->get('Data')->get('Dust2_5')];
             });
 
             list('mean' => $mean, 'valids' => $valids, 'outliners' => $outliners) = GeometrySrv::boxplot($sitesPm25);
 
             return [
-                'country' => CountryTownNameFormatter::formatCountry($country),
-                'town' => CountryTownNameFormatter::formatTown($town),
-                'pm25' => $mean,
-                'valids' => CountryTownNameFormatter::formatRecordsFromUids($items, $valids),
+                'country'   => CountryTownNameFormatter::formatCountry($country),
+                'town'      => CountryTownNameFormatter::formatTown($town),
+                'pm25'      => $mean,
+                'valids'    => CountryTownNameFormatter::formatRecordsFromUids($items, $valids),
                 'outliners' => CountryTownNameFormatter::formatRecordsFromUids($items, $outliners),
             ];
         })->values();
 
         $townmap = [
-            'data' => $grouped,
+            'data'      => $grouped,
             'published' => time(),
         ];
 

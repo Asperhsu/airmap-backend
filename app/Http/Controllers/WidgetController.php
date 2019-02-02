@@ -20,9 +20,14 @@ class WidgetController extends Controller
 
         $vueScript = '<script src="' . url('js/airmap-widget.js') . '"></script>';
         $vues = $items->mapWithKeys(function ($item) use ($group, $uuid) {
-            return [$item['type'] => view('widget.vue', [
-                'group' => $group, 'uuid' => $uuid, 'type' => $item['type'], 'height' => $item['height']
-            ])->render()];
+            return [$item['type'] => [
+                'normal' => view('widget.vue', [
+                        'group' => $group, 'uuid' => $uuid, 'type' => $item['type'], 'height' => $item['height']
+                    ])->render(),
+                'compatible'  => view('widget.vue-compatible', [
+                        'group' => $group, 'uuid' => $uuid, 'type' => $item['type'], 'height' => $item['height']
+                    ])->render(),
+            ]];
         });
 
         return view('widget.create-js', compact('group', 'uuid', 'vueScript', 'vues'));
