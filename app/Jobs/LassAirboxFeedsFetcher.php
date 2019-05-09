@@ -18,6 +18,6 @@ class LassAirboxFeedsFetcher extends FeedsFetcher
 
     public function feeds(array $data)
     {
-        return $data['feeds'];
+        return $data['feeds'] ?? [];
     }
 }
