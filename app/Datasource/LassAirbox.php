@@ -8,7 +8,7 @@ class LassAirbox extends Lass
 
     public static function feedResource()
     {
-        return "https://data.lass-net.org/data/last-all-airbox.json";
+        return 'https://data.lass-net.org/data/last-all-airbox.json.gz';
     }
 
     public static function parse(array $raw)

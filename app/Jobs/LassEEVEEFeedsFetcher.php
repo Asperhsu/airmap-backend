@@ -4,19 +4,15 @@ namespace App\Jobs;
 
 use App\Datasource\LassEEVEE;
 
-class LassEEVEEFeedsFetcher extends FeedsFetcher
+class LassEEVEEFeedsFetcher extends LassFeedsFetcher
 {
     public function feedResource()
     {
         return LassEEVEE::feedResource();
     }
 
-    public function parseFeed(array $raw){
-        return LassEEVEE::parse($raw);
-    }
-
-    public function feeds(array $data)
+    public function parseFeed(array $raw)
     {
-        return $data['feeds'];
+        return LassEEVEE::parse($raw);
     }
 }

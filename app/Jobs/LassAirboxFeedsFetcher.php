@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Datasource\LassAirbox;
 
-class LassAirboxFeedsFetcher extends FeedsFetcher
+class LassAirboxFeedsFetcher extends LassFeedsFetcher
 {
     public function feedResource()
     {
@@ -14,10 +14,5 @@ class LassAirboxFeedsFetcher extends FeedsFetcher
     public function parseFeed(array $raw)
     {
         return LassAirbox::parse($raw);
-    }
-
-    public function feeds(array $data)
-    {
-        return $data['feeds'] ?? [];
     }
 }

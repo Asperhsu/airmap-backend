@@ -3,15 +3,14 @@
 namespace App\Datasource;
 
 use Carbon\Carbon;
-use App\Models\Record;
 
 class Lass implements Contract
 {
-    static $maker = 'LASS';
-    
+    public static $maker = 'LASS';
+
     public static function feedResource()
     {
-        return "https://data.lass-net.org/data/last-all-lass.json";
+        return 'https://data.lass-net.org/data/last-all-lass.json.gz';
     }
 
     public static function parse(array $raw)
@@ -34,11 +33,11 @@ class Lass implements Contract
                 if (!is_numeric($value)) {
                     return;
                 }
-                
+
                 if ($key == 's_d0') {
                     $feed['pm25'] = $value;
                 }
-                
+
                 if (in_array($key, ['s_h0', 's_h2'])) {
                     $feed['humidity'] = $value;
                 }
@@ -47,7 +46,7 @@ class Lass implements Contract
                     $feed['temperature'] = $value;
                 }
             });
-        
+
         return $feed;
     }
 }
