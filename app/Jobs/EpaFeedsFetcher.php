@@ -22,7 +22,7 @@ class EpaFeedsFetcher extends FeedsFetcher
     public function loadSitesInfo()
     {
         if (!Storage::exists($this->siteInfoFilename)) {
-            $url = 'http://opendata.epa.gov.tw/ws/Data/AQXSite/?$format=json';
+            $url = 'https://opendata.epa.gov.tw/api/v1/AQXSite?format=json';
             $response = HttpClient::getJson($url);
             $data = $response['data'];
             Storage::put($this->siteInfoFilename, json_encode($data));
