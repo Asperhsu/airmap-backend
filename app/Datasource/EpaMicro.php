@@ -10,7 +10,7 @@ class EpaMicro implements Contract
     public static function feedResource()
     {
         $query = [
-            '$expand' => 'Thing,Observations($orderby=phenomenonTime;$top=1)',
+            '$expand' => 'Thing,Observations($orderby=phenomenonTime desc;$top=1)',
             '$select' => 'name,Thing,Observations',
             '$filter' => "name eq 'PM2.5'",
             '$count' => 'true',
