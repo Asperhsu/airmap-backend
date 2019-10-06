@@ -72,10 +72,10 @@ class GroupJSONFormatter
     {
         $group = $record->group_name ?? ($record->group ? $record->group->name : null);
         $uid = $group.'$'.$record->uuid;
+        $cacheKey = 'GROUP_GEOMETRY_' . $uid;
         $geometrySrv = resolve('App\Service\Geometry');
 
-        if (Cache::tags('GROUP_GEOMETRY')->has($uid)) {
-            $townCode = Cache::tags('GROUP_GEOMETRY')->get($uid);
+        if ($townCode = Cache::get($cacheKey)) {
             if ($townCode === 'none') {
                 return null;
             }
@@ -87,7 +87,7 @@ class GroupJSONFormatter
         $feature = $geometrySrv->findFeature($record->lat, $record->lng);
         $geometry = $feature ? collect($feature['properties']) : null;
         $townCode = $geometry ? $geometry->get('TOWNCODE') : 'none';
-        Cache::tags('GROUP_GEOMETRY')->put($uid, $townCode, 24 * 3600); // cache 24 hours
+        Cache::put($cacheKey, $townCode, 24 * 3600); // cache 24 hours
 
         return $geometry;
     }

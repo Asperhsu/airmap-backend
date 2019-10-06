@@ -9,6 +9,7 @@ class Geometry
 {
     protected $features;
     protected $geoJsonPath = 'assets/json/town.json';
+    protected $towncodeIndexMapping;
 
     public function __construct()
     {
@@ -34,26 +35,27 @@ class Geometry
 
     public function getFeatureByTownID(string $townCode)
     {
-        $filterFeatures = array_filter($this->features, function ($feature) use ($townCode) {
-            $featureTownCode = $feature['properties']['TOWNCODE'] ?? null;
-            return $featureTownCode === $townCode;
-        });
+        if (!$this->towncodeIndexMapping) {
+            $this->towncodeIndexMapping = collect($this->features)->mapWithKeys(function ($feature, $index) {
+                return [array_get($feature, 'properties.TOWNCODE') => $index];
+            });
+        }
 
-        return count($filterFeatures) ? array_shift($filterFeatures) : null;
+        $index = array_get($this->towncodeIndexMapping, $townCode);
+        return $index ? $this->features[$index] : null;
     }
 
     public function findFeature(float $lat, float $lng)
     {
-        $filterFeatures = array_filter($this->features, function ($feature) use ($lat, $lng) {
-            $coordinates = $feature['geometry']['coordinates'][0] ?? null;
-            if (!$coordinates) {
-                return false;
-            }
+        return collect($this->features)
+            ->filter(function ($feature) use ($lat, $lng) {
+                $coordinates = array_get($feature, 'geometry.coordinates');
+                if (!$coordinates) {
+                    return false;
+                }
 
-            return $this->isInPolygon($coordinates, $lat, $lng);
-        });
-
-        return count($filterFeatures) ? array_shift($filterFeatures) : null;
+                return $this->isInPolygon($coordinates, $lat, $lng);
+            })->first();
     }
 
     public function isInPolygon(array $coordinates, float $lat, float $lng)
