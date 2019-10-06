@@ -57,11 +57,16 @@ class GroupSeeder extends Seeder
             [
                 'name'    => 'EPA',
                 'handler' => 'App\Jobs\EpaFeedsFetcher',
-                'enable'  => true,
+                'enable'  => false,
             ],
             [
                 'name'    => 'Airq',
                 'handler' => 'App\Jobs\AirqFeedsFetcher',
+                'enable'  => true,
+            ],
+            [
+                'name'    => 'EPA-Micro',
+                'handler' => 'App\Jobs\EpaMicroFeedsFetcher',
                 'enable'  => true,
             ],
         ];

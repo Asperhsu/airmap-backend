@@ -39,6 +39,10 @@ class Kernel extends ConsoleKernel
                  ->timezone('Asia/Taipei')
                  ->hourly();
 
+        $schedule->command('fetch:epa-micro-locations')
+                 ->timezone('Asia/Taipei')
+                 ->monthly();
+
         // $schedule->command('record:update-json')
         //          ->timezone('Asia/Taipei')
         //          ->everyFiveMinutes();
