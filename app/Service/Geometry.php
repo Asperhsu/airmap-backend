@@ -49,7 +49,7 @@ class Geometry
     {
         return collect($this->features)
             ->filter(function ($feature) use ($lat, $lng) {
-                $coordinates = array_get($feature, 'geometry.coordinates');
+                $coordinates = array_get($feature, 'geometry.coordinates.0');
                 if (!$coordinates) {
                     return false;
                 }
