@@ -43,9 +43,9 @@ class Kernel extends ConsoleKernel
                  ->timezone('Asia/Taipei')
                  ->monthly();
 
-        // $schedule->command('record:update-json')
-        //          ->timezone('Asia/Taipei')
-        //          ->everyFiveMinutes();
+        $schedule->command('record:update-json')
+                 ->timezone('Asia/Taipei')
+                 ->everyFiveMinutes();
 
         $schedule->command('record:clear-expired')
                  ->timezone('Asia/Taipei')
