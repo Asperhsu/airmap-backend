@@ -13,6 +13,7 @@
             <form method="POST" action="{{ $isEdit ? route('admin.thingspeak.update', $thingspeak->id) : route('admin.thingspeak.store') }}">
                 {{ csrf_field() }}
                 {{ $isEdit ? method_field('PUT') : '' }}
+                <input type="hidden" name="id" value="{{ $thingspeak->id }}"/>
 
                 <div class="form-group">
                     <label for="channel">Group</label>

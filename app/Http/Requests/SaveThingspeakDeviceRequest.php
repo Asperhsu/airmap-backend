@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class SaveThingspeakDeviceRequest extends FormRequest
 {
@@ -26,7 +27,10 @@ class SaveThingspeakDeviceRequest extends FormRequest
     {
         return [
             'group'   => 'required',
-            'channel' => 'required|numeric|unique:thingspeaks,channel',
+            'channel' => [
+                'required', 'numeric',
+                Rule::unique('thingspeaks')->ignore($this->input('id')),
+            ],
             'party'   => 'required_if:group,Independent',
             'maker'   => 'required',
             'fields'  => 'required|array',
